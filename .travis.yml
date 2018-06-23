@@ -5,7 +5,10 @@ language: python
 python:
   - 3.6.5
 
+cache: pip
+
 install:
+ - pip install -U https://github.com/Rapptz/discord.py/tarball/7eb918b19e3e60b56eb9039eb267f8f3477c5e17#egg=discord.py-1.0
  - pip install -U --process-dependency-links --no-cache-dir red-discordbot
  - pip install black
 
