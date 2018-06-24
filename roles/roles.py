@@ -1,5 +1,5 @@
 import discord
-from redbot.core import commands, checks
+from redbot.core import commands
 
 
 class Roles:
@@ -12,7 +12,7 @@ class Roles:
 
     @commands.command()
     @commands.guild_only()
-    async def role(self, ctx, rolename = None):
+    async def role(self, ctx, rolename=None):
         """
         Adds a role to the user
 
@@ -45,4 +45,3 @@ class Roles:
             else:
                 await ctx.author.remove_roles(role)
                 await ctx.send("I have taken the role from you")
-
