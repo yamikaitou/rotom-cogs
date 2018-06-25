@@ -13,7 +13,10 @@ class Roles:
 
     def role_assign():
         def predicate(ctx):
-            return ctx.message.channel.id == 460650422986735626 or ctx.message.channel.id == 362798066199298049
+            return (
+                ctx.message.channel.id == 460650422986735626
+                or ctx.message.channel.id == 362798066199298049
+            )
 
         return commands.check(predicate)
 
