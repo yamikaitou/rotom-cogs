@@ -1,3 +1,0 @@
-https://github.com/Rapptz/discord.py/tarball/7eb918b19e3e60b56eb9039eb267f8f3477c5e17#egg=discord.py-1.0
-red-discordbot
-black
