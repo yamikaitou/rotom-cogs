@@ -1,16 +1,13 @@
-dist: trusty
-sudo: false
+dist: bionic
 language: python
-
 python:
-  - 3.6.5
-
+  - "3.6.6"
+cache: pip
 install:
- - pip install -r requirements.txt
-
+  - pip install -U --process-dependency-links red-discordbot[mongo]
+  - pip install -r requirements.txt
 script:
   - python -m compileall .
   - black --check `git ls-files "*.py"`
-
 notifications:
   email: false
