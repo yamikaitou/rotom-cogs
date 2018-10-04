@@ -3,7 +3,7 @@ from redbot.core import commands, __version__
 import sys
 
 
-class Info:
+class Info(getattr(commands, "Cog", object)):
     def __init__(self, bot):
         self.bot = bot
 

@@ -4,7 +4,7 @@ from redbot.core import commands
 from redbot.core import Config
 
 
-class Roles:
+class Roles(getattr(commands, "Cog", object)):
     """
     Role Management
     """
