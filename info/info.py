@@ -9,18 +9,8 @@ class Info(getattr(commands, "Cog", object)):
         self.bot = bot
         self.config = Config.get_conf(self, identifier=602700309)
         default_guild = {
-            "channel": {
-                "role": None,
-                "ex": None,
-                "raid": None,
-                "social": None,
-                "research": None,
-            },
-            "setting": {
-                "egg": None,
-                "boss": None,
-                "research": None,
-            }
+            "channel": {"role": None, "ex": None, "raid": None, "social": None, "research": None},
+            "setting": {"egg": None, "boss": None, "research": None},
         }
         self.config.register_guild(**default_guild)
 
@@ -108,13 +98,14 @@ class Info(getattr(commands, "Cog", object)):
                 "Raid Egg Timer: {}\n"
                 "Raid Boss Timer: {}\n"
                 "```".format(
-                    guild.get_channel(crole), 
-                    guild.get_channel(cex), 
-                    guild.get_channel(craid), 
-                    guild.get_channel(csocial), 
+                    guild.get_channel(crole),
+                    guild.get_channel(cex),
+                    guild.get_channel(craid),
+                    guild.get_channel(csocial),
                     guild.get_channel(cresearch),
-                    segg, sboss
-                    )
+                    segg,
+                    sboss,
+                )
             )
 
         pass
