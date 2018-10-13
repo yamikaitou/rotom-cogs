@@ -1,0 +1,8 @@
+{
+    "AUTHOR" : ["YamiKaitou"],
+    "INSTALL_MSG" : "The cogs within are provided as-is. They are built for a specific Discord community but kept as generic as possible.",
+    "NAME" : "YamiKaitou's Rotom Cogs",
+    "SHORT" : "Pokemon Go Discord Bot Cogs",
+    "DESCRIPTION" : "Cogs designed to assist Pokemon Go Discord group manage raids and etc",
+    "TAGS" : []
+}
