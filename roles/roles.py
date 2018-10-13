@@ -12,6 +12,7 @@ class Roles(getattr(commands, "Cog", object)):
     def __init__(self, bot):
         self.bot = bot
         self.config = Config.get_conf(self, identifier=772041520)
+        self.settings = Config.get_conf(None, identifier=602700309, cog_name="Info")
 
     @commands.command()
     @commands.guild_only()
@@ -22,21 +23,20 @@ class Roles(getattr(commands, "Cog", object)):
         :param rolename: Role Name
         """
 
-        if (
-            ctx.message.channel.id != 460650422986735626
-            or ctx.message.channel.id != 362798066199298049
-        ):
-            pass
+        guild = ctx.guild
+        chan = await self.settings.guild(guild).channel()
+        if ctx.message.channel.id != chan["role"]:
+            return
 
         msg = None
 
         if rolename is not None:
             try:
-                gen = await self.config.gen.all()
-                pkm = await self.config.pkm.all()
-                exr = await self.config.exr.all()
+                gen = await self.config.guild(guild).gen()
+                pkm = await self.config.guild(guild).pkm()
+                exr = await self.config.guild(guild).exr()
 
-                if rolename not in gen or rolename not in pkm or rolename not in exr:
+                if rolename not in gen and rolename not in pkm and rolename not in exr:
                     raise AttributeError("Invalid Role")
 
                 role = discord.utils.get(ctx.guild.roles, name=rolename)
@@ -49,7 +49,7 @@ class Roles(getattr(commands, "Cog", object)):
                     await ctx.send("I have taken the role from you")
                     return
             except AttributeError:
-                msg = "I could not find that role, please try again"
+                msg = "I could not find that role, please try again\n"
 
         embed = discord.Embed(
             title="Available Roles",
@@ -59,21 +59,21 @@ class Roles(getattr(commands, "Cog", object)):
         )
 
         value = ""
-        async with self.config.gen() as vals:
+        async with self.config.guild(guild).gen() as vals:
             for val in vals:
                 value = value + "\n" + val
 
         embed.add_field(name="Locations", value=value)
 
         value = ""
-        async with self.config.pkm() as vals:
+        async with self.config.guild(guild).pkm() as vals:
             for val in vals:
                 value = value + "\n" + val
 
         embed.add_field(name="Pokemon", value=value)
 
         value = ""
-        async with self.config.exr() as vals:
+        async with self.config.guild(guild).exr() as vals:
             for val in vals:
                 value = value + "\n" + val
 
