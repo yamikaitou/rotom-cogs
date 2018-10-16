@@ -9,7 +9,14 @@ class Info(getattr(commands, "Cog", object)):
         self.bot = bot
         self.config = Config.get_conf(self, identifier=602700309)
         default_guild = {
-            "channel": {"role": None, "ex": None, "raid": None, "social": None, "research": None},
+            "channel": {
+                "role": None,
+                "ex": None,
+                "raid": None,
+                "social": None,
+                "research": None,
+                "nest": None,
+            },
             "setting": {"egg": None, "boss": None, "research": None},
         }
         self.config.register_guild(**default_guild)
@@ -82,6 +89,7 @@ class Info(getattr(commands, "Cog", object)):
             craid = await self.config.guild(guild).channel.raid()
             csocial = await self.config.guild(guild).channel.social()
             cresearch = await self.config.guild(guild).channel.research()
+            cnest = await self.config.guild(guild).channel.nest()
             segg = await self.config.guild(guild).setting.egg()
             sboss = await self.config.guild(guild).setting.boss()
 
@@ -93,6 +101,7 @@ class Info(getattr(commands, "Cog", object)):
                 "Raids: {}\n"
                 "Social Media: {}\n"
                 "Research: {}\n"
+                "Nests: {}\n"
                 "\n"
                 "Various Settings\n"
                 "Raid Egg Timer: {}\n"
@@ -103,6 +112,7 @@ class Info(getattr(commands, "Cog", object)):
                     guild.get_channel(craid),
                     guild.get_channel(csocial),
                     guild.get_channel(cresearch),
+                    guild.get_channel(cnest),
                     segg,
                     sboss,
                 )
@@ -164,6 +174,17 @@ class Info(getattr(commands, "Cog", object)):
             await self.config.guild(ctx.guild).channel.research.set(ctx.channel.id)
         else:
             await self.config.guild(ctx.guild).channel.research.set(channel.id)
+
+    @pogo.command()
+    @commands.guild_only()
+    async def nest(self, ctx, channel: discord.TextChannel = None):
+        """
+        Set the channel for Nest reports
+        """
+        if channel is None:
+            await self.config.guild(ctx.guild).channel.nest.set(ctx.channel.id)
+        else:
+            await self.config.guild(ctx.guild).channel.nest.set(channel.id)
 
     @pogo.command()
     @commands.guild_only()
