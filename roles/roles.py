@@ -1,7 +1,6 @@
 import discord
 import random
-from redbot.core import commands
-from redbot.core import Config
+from redbot.core import commands, Config, checks
 
 
 class Roles(getattr(commands, "Cog", object)):
@@ -80,3 +79,29 @@ class Roles(getattr(commands, "Cog", object)):
         embed.add_field(name="EX Locations", value=value)
 
         await ctx.send(content=msg, embed=embed)
+
+    @commands.group()
+    @commands.guild_only()
+    @checks.admin_or_permissions(manage_roles=True)
+    async def roles(self, ctx):
+        """
+        Manage the roles users can assign themselves
+        """
+        pass
+
+    @roles.command()
+    @commands.guild_only()
+    async def add(self, ctx, category, *, rolename):
+        """
+        Add new roles that users can assign themselves
+        :param category: Category to add the role to
+        :param rolename: The name of the role to add; location, pokemon, exraid
+        """
+        if category not in ["location", "pokemon", "exraid"]:
+            await ctx.send(
+                "Unknown Category. Please retry with one from the below list\n"
+                "`location` for Location Based Roles\n"
+                "`pokemon` for Pokemon Based Roles\n"
+                "`exraid` for EX-Raid Eligible Based Roles"
+            )
+            return
