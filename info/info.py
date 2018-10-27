@@ -17,7 +17,7 @@ class Info(getattr(commands, "Cog", object)):
                 "research": None,
                 "nest": None,
             },
-            "setting": {"egg": None, "boss": None, "research": None},
+            "setting": {"egg": None, "boss": None, "tz": None},
         }
         self.config.register_guild(**default_guild)
 
@@ -92,6 +92,7 @@ class Info(getattr(commands, "Cog", object)):
             cnest = await self.config.guild(guild).channel.nest()
             segg = await self.config.guild(guild).setting.egg()
             sboss = await self.config.guild(guild).setting.boss()
+            stz = await self.config.guild(guild).setting.tz()
 
             await ctx.send(
                 "```"
@@ -106,6 +107,7 @@ class Info(getattr(commands, "Cog", object)):
                 "Various Settings\n"
                 "Raid Egg Timer: {}\n"
                 "Raid Boss Timer: {}\n"
+                "Timezone Offset: {}\n"
                 "```".format(
                     guild.get_channel(crole),
                     guild.get_channel(cex),
@@ -115,6 +117,7 @@ class Info(getattr(commands, "Cog", object)):
                     guild.get_channel(cnest),
                     segg,
                     sboss,
+                    stz,
                 )
             )
 
@@ -201,3 +204,11 @@ class Info(getattr(commands, "Cog", object)):
         Set the time for Raid Bosses (in minutes)
         """
         await self.config.guild(ctx.guild).setting.boss.set(time)
+
+    @pogo.command()
+    @commands.guild_only()
+    async def tz(self, ctx, time):
+        """
+        Set the timezone offset
+        """
+        await self.config.guild(ctx.guild).setting.tz.set(time)
