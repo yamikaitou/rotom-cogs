@@ -1,7 +1,7 @@
 import discord
 import asyncio
 from redbot.core import commands, Config, checks
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta, time
 
 
 class Events(getattr(commands, "Cog", object)):
@@ -14,6 +14,7 @@ class Events(getattr(commands, "Cog", object)):
         self.config = Config.get_conf(self, identifier=1892027056)
         self.settings = Config.get_conf(None, identifier=602700309, cog_name="Info")
         self.auto_check = self.bot.loop.create_task(self.auto_worker())
+        self.config.register_global(**{"nest": datetime.utcnow().timestamp()})
 
     def __unload(self):
         self.auto_check.cancel()
@@ -58,6 +59,7 @@ class Events(getattr(commands, "Cog", object)):
                 channel = await self.settings.guild(guild).channel()
                 nests = await self.config.nest()
                 nest = datetime.utcfromtimestamp(nests)
+                settings = await self.settings.guild(guild).settings()
                 if channel is not None:
                     if channel["nest"] is not None and (190 > (datetime.utcnow() - nest).seconds):
                         await self.bot.get_channel(channel["nest"]).send(
@@ -67,4 +69,14 @@ class Events(getattr(commands, "Cog", object)):
                             "Travel safe Trainers"
                         )
                         await self.config.nest.set((nest + timedelta(days=14)).timestamp())
+
+                    if channel["research"] is not None and (
+                        datetime.utcnow() + timedelta(hours=settings["tz"])
+                    ).time().replace(microseconds=0) == time(0, 0, 0):
+                        history = await self.bot.get_channel(channel["research"]).history(
+                            after=(datetime.utcnow() - timedelta(days=1))
+                        )
+                        async for hist in history:
+                            await hist.delete()
+
             await asyncio.sleep(60)
