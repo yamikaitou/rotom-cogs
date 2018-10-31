@@ -21,8 +21,8 @@ class Info(getattr(commands, "Cog", object)):
         }
         self.config.register_guild(**default_guild)
 
-    @commands.command(name="info", aliases=["about"])
-    async def _info(self, ctx):
+    @commands.command(name="about")
+    async def _about(self, ctx):
         """
         Displays Info about Rotom
         """
@@ -68,7 +68,11 @@ class Info(getattr(commands, "Cog", object)):
             ),
             inline=False,
         )
-        embed.add_field(name="Data Sources", value="Unknown", inline=False)
+        embed.add_field(
+            name="Data Sources",
+            value="[The Silph Road](https://thesilphroad.com/)\n[Serebii](https://www.serebii.net/)\n[Pokemon Go Hub](https://pokemongohub.net/)\n[Ranked Boost: Pokemon Go](https://rankedboost.com/category/pokemon-go/)",
+            inline=False,
+        )
         embed.add_field(name="Owner", value=str(owner), inline=True)
         embed.add_field(name="Python", value=python_version, inline=True)
         embed.add_field(name="discord.py", value=dpy_version, inline=True)
