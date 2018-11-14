@@ -111,3 +111,7 @@ venv2/
 exraid/awskey\.py
 
 test/
+
+gyms/sqlkey\.py
+
+pkmn/sqlkey\.py
