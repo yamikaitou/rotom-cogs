@@ -5,8 +5,8 @@ import aiomysql
 
 try:
     from .sqlkey import *
-except:
-    raise ImportError("Missing sqlkey.py")
+except ImportError:
+    sqlkey = False
 
 
 class Gyms(getattr(commands, "Cog", object)):
@@ -21,9 +21,14 @@ class Gyms(getattr(commands, "Cog", object)):
 
     @commands.command()
     async def gym(self, ctx, *, gym: str):
+        if not sqlkey:
+            pass
         await ctx.send(await self.findgym(gym))
 
     async def findgym(self, gym: str):
+        if not sqlkey:
+            return False
+
         conn = await aiomysql.connect(
             host=SQL_HOST,
             port=3306,

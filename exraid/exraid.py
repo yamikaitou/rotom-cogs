@@ -11,7 +11,7 @@ from .emoji import *
 try:
     from .awskey import *
 except:
-    raise ImportError("Missing awskey.py")
+    awskey = False
 
 
 class EXRaid(getattr(commands, "Cog", object)):
@@ -22,6 +22,8 @@ class EXRaid(getattr(commands, "Cog", object)):
         self.config.register_guild(**{"active": []})
 
     async def on_message(self, message):
+        if not awskey:
+            pass
 
         if message.author.bot or isinstance(message.channel, discord.abc.PrivateChannel):
             return
